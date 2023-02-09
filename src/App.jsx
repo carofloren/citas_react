@@ -6,18 +6,19 @@ import ListadoPacientes from './components/ListadoPacientes';
 function App() {
   const [pacientes, setPacientes] = useState([]);
   const [paciente, setPaciente] = useState({});
+ 
+ 
+  const pacientesLS = JSON.parse(localStorage.getItem('pacientes')) || [];
+  useEffect(() => {
+    const obtenerLS = () => {
+      setPacientes(pacientesLS);
+    };
+    obtenerLS();
+  }, []);
 
-  // useEffect(() => {
-  //   const obtenerLS = () => {
-  //     const pacientesLS = JSON.parse(localStorage.getItem('pacientes')) ?? [];
-  //     setPacientes(pacientesLS);
-  //   };
-  //   obtenerLS();
-  // }, []);
-
-  // useEffect(() => {
-  //   localStorage.setItem('pacientes', JSON.stringify(pacientes)); // jsonstringify convierte el arreglo en string
-  // }, [pacientes]); //no funciona
+  useEffect(() => {
+    localStorage.setItem('pacientes', JSON.stringify(pacientes));
+  }, [pacientes]);
 
   const eliminarPaciente = (id) => {
     const pacientesActualizados = pacientes.filter((p) => p.id !== id);
